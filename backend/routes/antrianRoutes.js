@@ -3,11 +3,11 @@ const router = express.Router()
 const {
   tambahAntrian,
   getAntrian,
-  panggilANtrian,
+  panggilAntrian,
 } = require("../controllers/antrianController")
 
-router.post("/", tambahAntrian)
+router.post("/tambah", tambahAntrian)
 router.get("/", getAntrian)
-router.post("/:id", panggilANtrian)
+router.put("/panggil/:id", panggilAntrian)
 
 module.exports = router

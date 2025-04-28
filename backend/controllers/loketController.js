@@ -1,46 +1,26 @@
 const db = require("../config/db")
 
-// exports.tambahLoket = async (req, res) => {
-//   try {
-//     const { nama_loket, departemen_id } = req.body
-//     await db.query(
-//       "INSERT INTO loket (nama_loket, departemen_id) VALUES (?, ?)",
-//       [nama_loket, departemen_id]
-//     )
-//     res.status(201).json({ message: "Loket berhasil ditambahkan" })
-//   } catch (error) {
-//     res.status(500).json({ error: error.message })
-//   }
-// }
-
 exports.tambahLoket = async (req, res) => {
   try {
-    const { nama_loket, departemen_id } = req.body
+    const { id, nama_loket } = req.body;
 
-    if (!nama_loket || !departemen_id) {
+    if (!id || !nama_loket) {
       return res.status(400).json({
-        error: "Nama loket dan departemen_id wajib diisi",
-      })
-    }
-
-    const [departemen] = await db.query(
-      "SELECT * FROM departemen WHERE id = ?",
-      [departemen_id]
-    )
-    if (departemen.length === 0) {
-      return res.status(404).json({ error: "Departemen tidak ditemukan" })
+        error: "ID dan nama_loket wajib diisi",
+      });
     }
 
     await db.query(
-      "INSERT INTO loket (nama_loket, departemen_id) VALUES (?, ?)",
-      [nama_loket, departemen_id]
-    )
+      "INSERT INTO loket (id, nama_loket) VALUES (?, ?)",
+      [id, nama_loket]
+    );
 
-    res.status(201).json({ message: "Loket berhasil ditambahkan" })
+    res.status(201).json({ message: "Loket berhasil ditambahkan" });
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
-}
+};
+
 
 exports.getAllLoket = async (req, res) => {
   try {
