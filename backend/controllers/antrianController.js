@@ -22,7 +22,6 @@ exports.tambahAntrian = async (req, res) => {
 
     const nomorAntrian = `${nomorBaru} ${departemen_id}`;
 
-    // Insert tanpa loket_id
     await db.query(
       "INSERT INTO antrian (nomor_antrian, departemen_id) VALUES (?, ?)",
       [nomorAntrian, departemen_id]
