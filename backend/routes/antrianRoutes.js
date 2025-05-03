@@ -2,12 +2,14 @@ const express = require("express")
 const router = express.Router()
 const {
   tambahAntrian,
-  getAntrian,
+  getAllAntrian,
   panggilAntrian,
+  resetAntrian
 } = require("../controllers/antrianController")
 
 router.post("/tambah", tambahAntrian)
-router.get("/", getAntrian)
-router.put("/panggil/:id", panggilAntrian)
+router.get("/", getAllAntrian)
+router.post("/panggil/:id", panggilAntrian)
+router.post("/reset", resetAntrian)
 
 module.exports = router

@@ -1,4 +1,6 @@
 const db = require("../config/db")
+const { generateAudioSequence } = require("../utils/generateAudioSequence");
+
 
 exports.tambahAntrian = async (req, res) => {
   try {
@@ -43,15 +45,13 @@ exports.panggilAntrian = async (req, res) => {
     }
     
     const [loket] = await db.query("SELECT * FROM loket WHERE id = ?", [loket_id])
-
     if (!loket || loket.length === 0) {
       return res.status(404).json({ error: `Loket ID ${loket_id} tidak ditemukan`})
     }
 
     const [antrian] = await db.query("SELECT * FROM antrian WHERE id = ?", [id])
-
     if (!antrian || antrian.length === 0) {
-      return res.status(404).json({ error: `Antrian ID ${id} tiddak ditemukan`})
+      return res.status(404).json({ error: `Antrian ID ${id} tidak ditemukan`})
     }
 
     await db.query(
@@ -59,28 +59,44 @@ exports.panggilAntrian = async (req, res) => {
       [loket_id, id]
     );
 
-    res.status(200).json({ message: `Antrian ${antrian[0].nomor_antrian}, silahkan menuju ke loket ${loket[0].nama_loket}` 
+    const nomor_antrian = antrian[0].nomor_antrian;
+    const nama_loket = loket[0].nama_loket;
+
+    const audioSequence = generateAudioSequence(nomor_antrian, nama_loket);
+
+    res.status(200).json({ 
+      message: `Antrian ${antrian[0].nomor_antrian}, silahkan menuju ke loket ${loket[0].nama_loket}`,
+      audioSequence 
     });
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-exports.getAntrian = async (req, res) => {
-  try { 
-    const [antrian] = await db.query(
-      `SELECT
-      a.id,
-      a.nomor_antrian,
-      a.status,
-      a.created_at,
-      1.nama_loket
-    FROM antrian a
-    LEFT JOIN loket 1 ON a.loket_id = 1.id
-    ORDER BY a.created_at ASC`
-    )
-    res.status(200).json(antrian)
+exports.getAllAntrian = async (req, res) => {
+  try {
+    const [result] = await db.query(
+      `SELECT a.id, a.nomor_antrian, a.status, a.created_at, l.nama_loket, a.loket_id
+       FROM antrian a
+       LEFT JOIN loket l ON a.loket_id = l.id
+       ORDER BY a.created_at ASC`
+    );
+
+    res.status(200).json(result);
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
 };
+
+exports.resetAntrian = async (req, res) => {
+  try {
+    await db.query("DELETE FROM antrian");
+    await db.query("ALTER TABLE antrian AUTO_INCREMENT = 1");
+    await db.query("UPDATE antrian_counter SET nomor_terakhir = 0");
+
+    res.status(200).json({ message: "Antrian berhasil direset" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

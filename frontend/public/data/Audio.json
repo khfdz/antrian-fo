@@ -1,0 +1,28 @@
+{
+    "bell": "/audio/bell.mp3",
+    "nomor_antrian": "/audio/nomor_antrian.mp3",
+    "antrian_1": "/audio/antrian_1.mp3",
+    "antrian_2": "/audio/antrian_2.mp3",
+    "antrian_3": "/audio/antrian_3.mp3",
+    "antrian_4": "/audio/antrian_4.mp3",
+    "antrian_5": "/audio/antrian_5.mp3",
+    "antrian_6": "/audio/antrian_6.mp3",
+    "antrian_7": "/audio/antrian_7.mp3",
+    "antrian_8": "/audio/antrian_8.mp3",
+    "antrian_9": "/audio/antrian_9.mp3",
+    "antrian_10": "/audio/antrian_10.mp3",
+    "antrian_11": "/audio/antrian_11.mp3",
+    "antrian_100": "/audio/antrian_12.mp3",
+    "antrian_a": "/audio/A.mp3",
+    "antrian_b": "/audio/B.mp3",
+    "antrian_c": "/audio/C.mp3",
+    "antrian_d": "/audio/D.mp3",
+    "puluh": "/audio/puluh.mp3",
+    "belas": "/audio/belas.mp3",
+    "ratus": "/audio/ratus.mp3",
+    "silahkan_menuju_ke_loket_a": "/audio/silahkan_menuju_ke_loket_a.mp3",
+    "silahkan_menuju_ke_loket_b": "/audio/silahkan_menuju_ke_loket_b.mp3",
+    "silahkan_menuju_ke_loket_c": "/audio/silahkan_menuju_ke_loket_c.mp3",
+    "silahkan_menuju_ke_loket_d": "/audio/silahkan_menuju_ke_loket_d.mp3"
+  }
+  
