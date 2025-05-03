@@ -7,12 +7,12 @@ function generateAudioSequence(nomor_antrian, nama_loket) {
     audioSequence.push(makeAudio("/audio/antrian.mp3"));
 
     let angka, huruf;
-    let match = nomor_antrian.match(/^(\d+)\s*([A-Z])$/i); 
+    let match = nomor_antrian.match(/^(\d+)\s*([A-Z])$/i);
     if (match) {
         angka = parseInt(match[1]);
         huruf = match[2].toUpperCase();
     } else {
-        match = nomor_antrian.match(/^([A-Z])\s*(\d+)$/i); 
+        match = nomor_antrian.match(/^([A-Z])\s*(\d+)$/i);
         if (match) {
             huruf = match[1].toUpperCase();
             angka = parseInt(match[2]);
@@ -23,6 +23,8 @@ function generateAudioSequence(nomor_antrian, nama_loket) {
 
     const angkaAudio = convertNumberToAudio(angka);
     audioSequence.push(...angkaAudio);
+
+    // Tambahkan huruf dan tujuan loket
     audioSequence.push(makeAudio(`/audio/${huruf}.mp3`));
     audioSequence.push(makeAudio("/audio/silahkan_menuju_ke_loket.mp3"));
     audioSequence.push(makeAudio(`/audio/${nama_loket.toUpperCase()}.mp3`));
@@ -33,23 +35,14 @@ function generateAudioSequence(nomor_antrian, nama_loket) {
 function convertNumberToAudio(number) {
     const audioParts = [];
 
-    if (number <= 11) {
-        audioParts.push(makeAudio(`/audio/${number}.mp3`));
-    } else if (number < 20) {
-        audioParts.push(makeAudio(`/audio/${number % 10}.mp3`));
-        audioParts.push(makeAudio("/audio/belas.mp3"));
-    } else if (number < 100) {
-        const puluhan = Math.floor(number / 10);
-        const satuan = number % 10;
-        audioParts.push(makeAudio(`/audio/${puluhan}.mp3`));
-        audioParts.push(makeAudio("/audio/puluh.mp3"));
-        if (satuan > 0) {
-            audioParts.push(makeAudio(`/audio/${satuan}.mp3`));
-        }
-    } else if (number === 100) {
-        audioParts.push(makeAudio("/audio/100.mp3"));
+    const audioPath = `/audio/antrian_${number}.mp3`;
+
+    if (audioConfig[audioPath]) {
+        // Langsung pakai file audio jika tersedia
+        audioParts.push(makeAudio(audioPath));
     } else {
-        audioParts.push(makeAudio(`/audio/${number}.mp3`));
+        // Fallback jika audio tidak tersedia
+        console.warn(`Audio untuk antrian_${number}.mp3 tidak tersedia.`);
     }
 
     return audioParts;
