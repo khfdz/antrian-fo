@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 
 const Footer = () => {
   return (
-    <div className="bg-biru1 h-[10vh] flex items-center text-white text-2xl py-8 overflow-hidden fixed bottom-0">
+    <div className="bg-biru1 h-[10vh] flex items-center text-white text-3xl font-semibold py-8 overflow-hidden fixed bottom-0">
       <motion.div
         className="whitespace-nowrap"
         animate={{
@@ -28,7 +28,7 @@ const Footer = () => {
         </span>
       </motion.div>
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

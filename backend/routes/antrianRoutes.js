@@ -4,7 +4,7 @@ const {
   tambahAntrian,
   getAllAntrian,
   panggilAntrian,
-  resetAntrian
+  resetAntrian,
 } = require("../controllers/antrianController")
 
 router.post("/tambah", tambahAntrian)
